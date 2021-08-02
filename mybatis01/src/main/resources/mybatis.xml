@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+        <!DOCTYPE configuration
+                PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--mybatis-config.xml配置文件配置时，要注意节点顺序
+
+    顺序同错误提示信息一致：
+
+    元素类型为 "configuration" 的内容必须匹配 "(properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,plugins?,environments?
+
+    ,databaseIdProvider?,mappers?)"。  配置顺序问题  顺序必须和上面的一致否则报错-->
+
+
+    <!--settings   控制全局行为-->
+    <settings>
+
+        <!--打印日志-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+
+
+    <typeAliases>
+        <package name="org.example.domain"/>
+    </typeAliases>
+    <environments default="development">
+
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/springdb?characterEncoding=utf-8&amp;useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+<mappers>
+    <package name="org.example.dao"/>
+</mappers>
+</configuration>

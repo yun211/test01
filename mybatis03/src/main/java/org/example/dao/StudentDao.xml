@@ -10,4 +10,8 @@
     <insert id="insertStudent">
         insert into student values(#{id},#{name},#{email},#{age})
     </insert>
+
+    <select id="selectStudentsMap" resultType="org.example.domain.Student">
+        select * from student
+    </select>
 </mapper>

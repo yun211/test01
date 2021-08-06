@@ -7,12 +7,15 @@ import org.example.utils.MybatisUtil;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 public class MyTest {
     @Test
     public void test01(){
         SqlSession session = MybatisUtil.getSqlSession();
+
         StudentDao dao = session.getMapper(StudentDao.class);
+
         System.out.println(dao.getClass().getName());
         List<Student> studentList = dao.selectStudents();
         System.out.println(studentList);
@@ -25,7 +28,15 @@ public class MyTest {
         Student student  = new Student();
         dao.insertStudent(student);
         session.commit();
+    }
 
+    @Test
+    public void test03(){
+        SqlSession session = MybatisUtil.getSqlSession();
+
+        StudentDao dao = session.getMapper(StudentDao.class);
+        Map<Object,Object> studentMap = dao.selectStudentsMap();
+        System.out.println(studentMap);
 
     }
 

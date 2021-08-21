@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.annotations.Param;
 import org.example.domain.Student;
 
 import java.util.List;
@@ -15,6 +16,10 @@ public interface StudentDao {
 
     @MapKey("id")
     Map<Object,Object> selectStudentsMap();
+
+    List<Student> selectStudentsFor(@Param("sList")List  sList);
+
+    List<Student> selectStudentsFor1(@Param("stuList")List  sList);
 
 
 }

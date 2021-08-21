@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.example.dao.StudentDao">
     <select id="selectStudents" resultType="org.example.domain.Student">
-        select * from student order by id;
+        select * from student order by id
     </select>
 
     <insert id="insertStudent">
@@ -14,4 +14,40 @@
     <select id="selectStudentsMap" resultType="org.example.domain.Student">
         select * from student
     </select>
+
+    <!--collection 表示接口中方法参数的类型
+    在加上@Param注解之后就是注解之中的内容
+    item是自定义的 open循环开始的字符  close循环结束的字符  separator是集合成员之间的分隔符-->
+    <select id="selectStudentsFor" resultType="org.example.domain.Student">
+        select * from student
+            <if test="sList!=null and sList.size>0">
+
+
+        <where>
+            id in
+                <foreach collection="sList" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+        </where>
+            </if>
+    </select>
+
+    <sql id="sql01">
+        select * from student
+    </sql>
+    <select id="selectStudentsFor1" resultType="org.example.domain.Student">
+        <include refid="sql01"></include>
+        <if test="stuList!=null and stuList.size>0">
+
+
+            <where>
+                id in
+                <foreach collection="stuList" item="item" open="(" close=")" separator=",">
+                    #{item.id}
+                </foreach>
+            </where>
+        </if>
+    </select>
+
+
 </mapper>

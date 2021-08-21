@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <properties resource="jdbc.properties"/>
     <settings>
 
         <setting name="logImpl" value="STDOUT_LOGGING"/>
@@ -11,15 +12,39 @@
     <typeAliases>
         <package name="org.example.domain"/>
     </typeAliases>
+    
+    <!--是有顺序的，插件加在环境前面-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
     <environments default="development">
         <environment id="development">
+            <!--
+            type:事务的处理的类型
+            1）JDBC:表示mybatis底层是调用JDBC中的Connection对象，commit，rollback
+            2)MANAGED:把mybatis的事务处理委托给其他的容器（一个服务器软年，一个框架（spring))-->
             <transactionManager type="JDBC"/>
+
+            <!--
+            dataSource:表示数据源，java体系中，规定了实现了javax.sql.DataSource接口的都是数据源
+                       数据源表示Connection对象
+
+            type：指定数据源的类型
+                1）POLLED:使用连接池，mybatis会创建PooledDataSource类
+                2）UPOOLED:不使用连接池，在每次执行sql语句，先创建连接，执行sql,在关闭连接
+                            mybatis会创建一个UnPooledDataSource,管理Connection对象的使用
+                3）JNDI:java命名和服务目录（Windows注册表）-->
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <!--<property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url"
                           value="jdbc:mysql://localhost:3306/springdb?characterEncoding=utf-8&amp;useSSL=false"/>
                 <property name="username" value="root"/>
-                <property name="password" value="123456"/>
+                <property name="password" value="123456"/>-->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url"
+                          value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.name}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
     </environments>
